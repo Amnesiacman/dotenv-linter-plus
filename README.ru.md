@@ -2,16 +2,27 @@
 
 [English version](README.md)
 
-Валидатор `.env` по схеме с JSON-выводом для CI.
+Валидатор `.env` по JSON-схеме для локальной разработки и CI.
 
-## Быстрый старт
+## Возможности
+
+- проверка обязательных ключей
+- проверка типов значений: `string`, `int`, `bool`, `url`
+- обнаружение лишних ключей
+- strict-режим для CI
+- JSON-вывод для автоматизаций
+
+## Команды
 
 ```bash
-# Посмотрите справку CLI
-# (конкретные команды зависят от проекта)
+python3 main.py init-schema --output .env.schema.json
+python3 main.py lint --schema .env.schema.json --env-file .env
+python3 main.py lint --schema .env.schema.json --env-file .env --format json
+python3 main.py lint --schema .env.schema.json --env-file .env --allow-extra
+python3 main.py lint --schema .env.schema.json --env-file .env --strict
 ```
 
-## Документация
+## Коды возврата
 
-- Детали смотрите в файлах проекта и workflow-конфигурациях в этом репозитории.
-- Для англоязычной документации откройте `README.md`.
+- `0` валидация успешна
+- `1` валидация не пройдена
