@@ -1,10 +1,11 @@
 import json
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
 
 
-def parse_env_file(path: Path) -> dict:
-    values = {}
+def parse_env_file(path: Path) -> dict[str, str]:
+    values: dict[str, str] = {}
     if not path.exists():
         return values
     for raw_line in path.read_text(encoding="utf-8").splitlines():
@@ -16,7 +17,7 @@ def parse_env_file(path: Path) -> dict:
     return values
 
 
-def load_schema(path: Path) -> dict:
+def load_schema(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -41,12 +42,14 @@ def _validate_type(type_name: str, value: str) -> bool:
     return False
 
 
-def lint_env(schema_path: Path, env_path: Path, allow_extra: bool = False) -> dict:
-    report = {
+def lint_env(
+    schema_path: Path, env_path: Path, allow_extra: bool = False
+) -> dict[str, Any]:
+    report: dict[str, Any] = {
         "ok": False,
         "schema_path": str(schema_path),
         "env_path": str(env_path),
-        "allow_extra": allow_extra,
+        "allow_extra": bool(allow_extra),
         "errors": [],
         "warnings": [],
         "checked_keys": 0,
@@ -58,9 +61,9 @@ def lint_env(schema_path: Path, env_path: Path, allow_extra: bool = False) -> di
         report["errors"].append(f"Env file not found: {env_path}")
         return report
 
-    schema = load_schema(schema_path)
+    schema: dict[str, Any] = load_schema(schema_path)
     env_values = parse_env_file(env_path)
-    keys = schema.get("keys", {})
+    keys: dict[str, Any] = schema.get("keys", {})
     report["checked_keys"] = len(keys)
 
     for key, rules in keys.items():
