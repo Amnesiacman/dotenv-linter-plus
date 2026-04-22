@@ -14,7 +14,9 @@ def test_init_schema(tmp_path: Path):
 def test_lint_json(tmp_path: Path, capsys):
     schema = tmp_path / ".env.schema.json"
     env_file = tmp_path / ".env"
-    schema.write_text('{"keys":{"URL":{"type":"url","required":true}}}', encoding="utf-8")
+    schema.write_text(
+        '{"keys":{"URL":{"type":"url","required":true}}}', encoding="utf-8"
+    )
     env_file.write_text("URL=https://example.com\n", encoding="utf-8")
     code = main(
         [
@@ -35,7 +37,9 @@ def test_lint_json(tmp_path: Path, capsys):
 def test_lint_strict_fails_on_warning(tmp_path: Path):
     schema = tmp_path / ".env.schema.json"
     env_file = tmp_path / ".env"
-    schema.write_text('{"keys":{"A":{"type":"string","required":true}}}', encoding="utf-8")
+    schema.write_text(
+        '{"keys":{"A":{"type":"string","required":true}}}', encoding="utf-8"
+    )
     env_file.write_text("A=ok\nEXTRA=1\n", encoding="utf-8")
     code = main(
         [

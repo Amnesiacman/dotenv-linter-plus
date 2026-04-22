@@ -19,7 +19,9 @@ def test_lint_success(tmp_path: Path):
 def test_lint_missing_required(tmp_path: Path):
     schema = tmp_path / ".env.schema.json"
     env_file = tmp_path / ".env"
-    schema.write_text('{"keys":{"PORT":{"type":"int","required":true}}}', encoding="utf-8")
+    schema.write_text(
+        '{"keys":{"PORT":{"type":"int","required":true}}}', encoding="utf-8"
+    )
     env_file.write_text("", encoding="utf-8")
     report = lint_env(schema, env_file)
     assert report["ok"] is False
