@@ -42,9 +42,7 @@ def _validate_type(type_name: str, value: str) -> bool:
     return False
 
 
-def lint_env(
-    schema_path: Path, env_path: Path, allow_extra: bool = False
-) -> dict[str, Any]:
+def lint_env(schema_path: Path, env_path: Path, allow_extra: bool = False) -> dict[str, Any]:
     report: dict[str, Any] = {
         "ok": False,
         "schema_path": str(schema_path),
