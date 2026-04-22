@@ -1,22 +1,66 @@
 # dotenv-linter-plus
 
-Schema-aware .env validator with CI-friendly JSON output.
+`dotenv-linter-plus` проверяет `.env` по JSON-схеме с типами и required-правилами.
+Инструмент подходит для локальной проверки и CI-гейтов.
 
-## MVP status
+## Поддерживаемые типы
 
-- Basic CLI scaffold is ready (`main.py`).
-- Supports `--format text|json` and `--dry-run`.
-- Intended as a foundation for iterative feature work.
+- `string`
+- `int`
+- `bool` (`true/false/1/0/yes/no`)
+- `url`
 
-## Quick start
+## Установка
+
+```bash
+python3 -m pip install -e .
+dotenv-linter-plus --help
+```
+
+Локально без установки:
 
 ```bash
 python3 main.py --help
-python3 main.py --format json --dry-run
 ```
 
-## Next steps
+## Быстрый старт
 
-1. Add domain-specific command set and config file support.
-2. Add tests and GitHub Actions workflow.
-3. Package and publish first tagged release.
+1) Создать стартовую схему:
+
+```bash
+python3 main.py init-schema
+```
+
+2) Проверить `.env`:
+
+```bash
+python3 main.py lint --schema .env.schema.json --env-file .env
+```
+
+3) Получить JSON-отчет:
+
+```bash
+python3 main.py lint --schema .env.schema.json --env-file .env --format json
+```
+
+## Режимы
+
+- `--allow-extra`: не ругаться на ключи, которых нет в схеме
+- `--strict`: падать (exit code `1`) не только на errors, но и на warnings
+
+## Формат схемы
+
+```json
+{
+  "keys": {
+    "APP_ENV": {"type": "string", "required": true},
+    "DEBUG": {"type": "bool", "required": true},
+    "PORT": {"type": "int", "required": true}
+  }
+}
+```
+
+## GitHub Actions
+
+- `ci.yml`: запускает тесты и smoke lint
+- `release.yml`: создает GitHub Release по тегу `v*`
