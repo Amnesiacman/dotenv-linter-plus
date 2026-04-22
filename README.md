@@ -1,5 +1,7 @@
 # dotenv-linter-plus
 
+![CI](https://github.com/Amnesiacman/dotenv-linter-plus/actions/workflows/ci.yml/badge.svg)
+
 `dotenv-linter-plus` проверяет `.env` по JSON-схеме с типами и required-правилами.
 Инструмент подходит для локальной проверки и CI-гейтов.
 
