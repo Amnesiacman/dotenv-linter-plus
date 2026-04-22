@@ -54,7 +54,9 @@ def _render_text(report: dict) -> str:
 def _init_schema(output: Path, force: bool) -> tuple[bool, str]:
     if output.exists() and not force:
         return False, f"{output} already exists. Use --force to overwrite."
-    output.write_text(json.dumps(DEFAULT_SCHEMA, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    output.write_text(
+        json.dumps(DEFAULT_SCHEMA, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+    )
     return True, f"Schema created: {output}"
 
 
@@ -79,4 +81,3 @@ def main(argv=None) -> int:
         return 0 if report["ok"] else 1
     build_parser().print_help()
     return 1
-

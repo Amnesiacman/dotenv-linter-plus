@@ -1,2 +1,1 @@
 """dotenv-linter-plus package."""
-

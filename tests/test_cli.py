@@ -48,4 +48,3 @@ def test_lint_strict_fails_on_warning(tmp_path: Path):
         ]
     )
     assert code == 1
-

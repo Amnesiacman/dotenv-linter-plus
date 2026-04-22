@@ -84,4 +84,3 @@ def lint_env(schema_path: Path, env_path: Path, allow_extra: bool = False) -> di
 
     report["ok"] = len(report["errors"]) == 0
     return report
-

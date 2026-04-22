@@ -24,4 +24,3 @@ def test_lint_missing_required(tmp_path: Path):
     report = lint_env(schema, env_file)
     assert report["ok"] is False
     assert "Missing required key: PORT" in report["errors"][0]
-
