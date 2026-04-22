@@ -4,14 +4,16 @@ Schema-aware .env validator with CI-friendly JSON output.
 
 ## MVP status
 
-- Basic CLI scaffold is ready ().
-- Supports  and .
+- Basic CLI scaffold is ready (`main.py`).
+- Supports `--format text|json` and `--dry-run`.
 - Intended as a foundation for iterative feature work.
 
 ## Quick start
 
-    python3 main.py --help
-    python3 main.py --format json --dry-run
+```bash
+python3 main.py --help
+python3 main.py --format json --dry-run
+```
 
 ## Next steps
 
