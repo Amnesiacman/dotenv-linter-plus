@@ -13,11 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Generate release notes draft
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f main.py ]; then
+            python main.py --help >/dev/null 2>&1 || true
+          fi
+          echo "## Automated release notes" > RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "Generated from git history." >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          git log --pretty=format:"- %s (%h)" -n 30 >> RELEASE_NOTES.md
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${GITHUB_REF_NAME}" \
             --title "${GITHUB_REF_NAME}" \
-            --generate-notes
-
+            --notes-file RELEASE_NOTES.md
